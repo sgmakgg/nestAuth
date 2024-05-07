@@ -10,13 +10,14 @@ import { IamModule } from './iam/iam.module';
   imports: [CoffeesModule, UsersModule, TypeOrmModule.forRoot({
     type: 'postgres',
     host: 'localhost',
-    port: 5432,
+    port: 5434,
     username: 'postgres',
     password: 'pass123',
-    database: 'postgres_auth',
+    database: 'postgres',
     autoLoadEntities: true,
     synchronize: true,
-  }), IamModule],
+  }),
+    IamModule],
   controllers: [AppController],
   providers: [AppService],
 })
