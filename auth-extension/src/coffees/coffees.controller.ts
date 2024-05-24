@@ -5,13 +5,18 @@ import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import {ActiveUser} from "../iam/decorators/active-user.decorator";
 import {ActiveUserData} from "../iam/interfaces/active-user-data.interface";
 import {Role} from "../users/enums/role.enum";
-import {Roles} from "../iam/authorization/decorators/role.decorator";
+import {Roles, ROLES_KEY} from "../iam/authorization/decorators/role.decorator";
+import {Policies} from "../iam/decorators/policies.decorator";
+import {FrameworkContributorPolicy} from "../iam/authorization/policies/framework-contributor.policy";
 
 @Controller('coffees')
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
-  @Roles(Role.Admin)
+  //@Roles(Role.Admin)
+  @Policies(
+      new FrameworkContributorPolicy(),  /** new MinAgePolicy(18), new OnlyAdminPolicy() */
+  )
   @Post()
   create(@Body() createCoffeeDto: CreateCoffeeDto) {
     return this.coffeesService.create(createCoffeeDto);
